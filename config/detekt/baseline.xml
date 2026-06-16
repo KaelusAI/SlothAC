@@ -7,8 +7,8 @@
     <ID>ComplexCondition:PacketListener.kt$PacketListener$!player.packetStateData.lastPacketWasTeleport &amp;&amp; flying.hasPositionChanged() &amp;&amp; flying.hasRotationChanged() &amp;&amp; ((flying.isOnGround == player.packetStateData.packetPlayerOnGround &amp;&amp; (player.user.clientVersion.isNewerThanOrEquals(ClientVersion.V_1_17) &amp;&amp; player.packetStateData.lastClaimedPosition.distanceSquared(location.position) &lt; threshold * threshold)) || inVehicle)</ID>
     <ID>CyclomaticComplexMethod:MonitorCommand.kt$MonitorCommand$private fun buildPart( part: String, viewer: Player, target: Player, probability: Double, buffer: Double, ping: Int, dmgMultiplier: Double, trend: Double, settings: MonitorSettings, ): Component?</ID>
     <ID>CyclomaticComplexMethod:PacketListener.kt$PacketListener$override fun onPacketSend(event: PacketSendEvent)</ID>
-    <ID>CyclomaticComplexMethod:PacketListener.kt$PacketListener$private fun checkTeleportQueue( player: SlothPlayer, flying: WrapperPlayClientPlayerFlying, ): Boolean</ID>
-    <ID>EmptyInitBlock:SlothPlayer.kt$SlothPlayer${}</ID>
+    <ID>CyclomaticComplexMethod:PacketListener.kt$PacketListener$private fun checkTeleportQueue( player: ShardPlayer, flying: WrapperPlayClientPlayerFlying, ): Boolean</ID>
+    <ID>EmptyInitBlock:ShardPlayer.kt$ShardPlayer${}</ID>
     <ID>FunctionNaming:TickData.kt$TickData$fun __assign(_i: Int, _bb: ByteBuffer): TickData</ID>
     <ID>FunctionNaming:TickData.kt$TickData$fun __init(_i: Int, _bb: ByteBuffer)</ID>
     <ID>FunctionNaming:TickData.kt$TickData.Companion$@JvmStatic fun ValidateVersion()</ID>
@@ -17,7 +17,7 @@
     <ID>FunctionNaming:TickDataSequence.kt$TickDataSequence$fun __init(_i: Int, _bb: ByteBuffer)</ID>
     <ID>FunctionNaming:TickDataSequence.kt$TickDataSequence.Companion$@JvmStatic fun ValidateVersion()</ID>
     <ID>FunctionNaming:TickDataSequence.kt$TickDataSequence.Vector$fun __assign(_vector: Int, _elementSize: Int, _bb: ByteBuffer): Vector</ID>
-    <ID>FunctionOnlyReturningConstant:SlothPlayer.kt$SlothPlayer$fun isCancelDuplicatePacket(): Boolean</ID>
+    <ID>FunctionOnlyReturningConstant:ShardPlayer.kt$ShardPlayer$fun isCancelDuplicatePacket(): Boolean</ID>
     <ID>FunctionParameterNaming:TickData.kt$TickData$_bb: ByteBuffer</ID>
     <ID>FunctionParameterNaming:TickData.kt$TickData$_i: Int</ID>
     <ID>FunctionParameterNaming:TickData.kt$TickData.Companion$_bb: ByteBuffer</ID>
@@ -30,7 +30,7 @@
     <ID>FunctionParameterNaming:TickDataSequence.kt$TickDataSequence.Vector$_bb: ByteBuffer</ID>
     <ID>FunctionParameterNaming:TickDataSequence.kt$TickDataSequence.Vector$_elementSize: Int</ID>
     <ID>FunctionParameterNaming:TickDataSequence.kt$TickDataSequence.Vector$_vector: Int</ID>
-    <ID>ImplicitDefaultLocale:AiCheck.kt$AiCheck$String.format( "[%s] Prob: %.4f | Buffer: %.2f -> %.2f | Damage Multiplier: %.2f", slothPlayer.player.name, probability, oldBuffer, buffer, slothPlayer.combat.damageMultiplier, )</ID>
+    <ID>ImplicitDefaultLocale:AiCheck.kt$AiCheck$String.format( "[%s] Prob: %.4f | Buffer: %.2f -> %.2f | Damage Multiplier: %.2f", shardPlayer.player.name, probability, oldBuffer, buffer, shardPlayer.combat.damageMultiplier, )</ID>
     <ID>ImplicitDefaultLocale:AiCheck.kt$AiCheck$String.format("%.1f", buffer)</ID>
     <ID>ImplicitDefaultLocale:AiCheck.kt$AiCheck$String.format("%.2f", probability)</ID>
     <ID>ImplicitDefaultLocale:DataCollectCommand.kt$DataCollectCommand$String.format( "%s_GLOBAL_%s", status.replace(' ', '#'), TIMESTAMP_FORMAT.format(Instant.now()), )</ID>
@@ -43,23 +43,23 @@
     <ID>LongMethod:AiCheck.kt$AiCheck$private fun onResponse(parsed: AiResult)</ID>
     <ID>LongMethod:ConfigManager.kt$ConfigManager$private fun loadValues()</ID>
     <ID>LongMethod:PlayerDataManagerTest.kt$PlayerDataManagerTest$private fun createFixture(): Fixture</ID>
-    <ID>LargeClass:MonitorCommand.kt$MonitorCommand : SlothCommandListener</ID>
+    <ID>LargeClass:MonitorCommand.kt$MonitorCommand : ShardCommandListener</ID>
     <ID>LongMethod:MonitorCommand.kt$MonitorCommand$override fun register(manager: CommandManager&lt;Sender>)</ID>
     <ID>LongMethod:MonitorCommand.kt$MonitorCommand$private fun buildPart( part: String, viewer: Player, target: Player, probability: Double, buffer: Double, ping: Int, dmgMultiplier: Double, trend: Double, settings: MonitorSettings, ): Component?</ID>
-    <ID>LongParameterList:AiCheck.kt$AiCheck$( slothPlayer: SlothPlayer, private val plugin: SlothAC, private val aiService: AiService, private val configManager: ConfigManager, private val regionProvider: RegionProvider, private val alertManager: AlertManager, private val damageProcessor: DamageProcessor, private val debugManager: DebugManager, private val scheduler: SchedulerService, )</ID>
+    <ID>LongParameterList:AiCheck.kt$AiCheck$( shardPlayer: ShardPlayer, private val plugin: Shard, private val aiService: AiService, private val configManager: ConfigManager, private val regionProvider: RegionProvider, private val alertManager: AlertManager, private val damageProcessor: DamageProcessor, private val debugManager: DebugManager, private val scheduler: SchedulerService, )</ID>
     <ID>LongParameterList:AiPredictionEvent.kt$AiPredictionEvent$( val playerId: UUID, val playerName: String, val checkName: String, val probability: Double, val bufferBefore: Double, val bufferAfter: Double, val damageMultiplier: Double, val prob90: Int, val flagged: Boolean, )</ID>
     <ID>LongParameterList:EntityScheduler.kt$EntityScheduler$( entity: Entity, plugin: Plugin, task: Runnable, retired: Runnable?, initialDelayTicks: Long, periodTicks: Long, )</ID>
     <ID>LongParameterList:MonitorCommand.kt$MonitorCommand$( part: String, viewer: Player, target: Player, probability: Double, buffer: Double, ping: Int, dmgMultiplier: Double, trend: Double, settings: MonitorSettings, )</ID>
     <ID>LongParameterList:MonitorCommand.kt$MonitorCommand$( viewer: Player, target: Player, probability: Double, buffer: Double, ping: Int, dmgMultiplier: Double, trend: Double, settings: MonitorSettings, )</ID>
-    <ID>LongParameterList:PlayerDataManager.kt$PlayerDataManager$( private val plugin: SlothAC, private val alertManager: AlertManager, private val dataCollectorManager: DataCollectorManager, private val configManager: ConfigManager, private val aiServerProvider: AIServerProvider, private val exemptManager: ExemptManager, private val scheduler: SchedulerService, private val checkManagerFactory: CheckManager.Factory, private val punishmentManagerFactory: PunishmentManager.Factory, )</ID>
+    <ID>LongParameterList:PlayerDataManager.kt$PlayerDataManager$( private val plugin: Shard, private val alertManager: AlertManager, private val dataCollectorManager: DataCollectorManager, private val configManager: ConfigManager, private val aiServerProvider: AIServerProvider, private val exemptManager: ExemptManager, private val scheduler: SchedulerService, private val checkManagerFactory: CheckManager.Factory, private val punishmentManagerFactory: PunishmentManager.Factory, )</ID>
     <ID>LongParameterList:PunishmentManager.kt$PunishmentManager$( group: PunishGroup, vl: Int, verbose: String, command: String, playerName: String, checkName: String, )</ID>
     <ID>LongParameterList:PunishmentManager.kt$PunishmentManager$( group: PunishGroup, vl: Int, verbose: String, commands: List&lt;String>, playerName: String, checkName: String, )</ID>
-    <ID>LongParameterList:PunishmentManager.kt$PunishmentManager$( private val slothPlayer: SlothPlayer, private val plugin: SlothAC, private val configManager: ConfigManager, databaseManager: DatabaseManager, private val alertManager: AlertManager, private val adventure: BukkitAudiences, private val scheduler: SchedulerService, private val coroutines: SlothCoroutines, )</ID>
+    <ID>LongParameterList:PunishmentManager.kt$PunishmentManager$( private val shardPlayer: ShardPlayer, private val plugin: Shard, private val configManager: ConfigManager, databaseManager: DatabaseManager, private val alertManager: AlertManager, private val adventure: BukkitAudiences, private val scheduler: SchedulerService, private val coroutines: ShardCoroutines, )</ID>
     <ID>LongParameterList:PunishmentTriggeredEvent.kt$PunishmentTriggeredEvent$( val playerId: UUID, val playerName: String, val checkName: String, val groupName: String, val violationLevel: Int, val actions: ImmutableList&lt;String>, val debug: String, )</ID>
     <ID>LongParameterList:RegionScheduler.kt$RegionScheduler$( plugin: Plugin, world: World, chunkX: Int, chunkZ: Int, task: Runnable, delayTicks: Long, )</ID>
     <ID>LongParameterList:RegionScheduler.kt$RegionScheduler$( plugin: Plugin, world: World, chunkX: Int, chunkZ: Int, task: Runnable, initialDelayTicks: Long, periodTicks: Long, )</ID>
-    <ID>LongParameterList:SlothCore.kt$SlothCore$( private val plugin: SlothAC, private val playerDataManager: PlayerDataManager, private val configManager: ConfigManager, private val localeManager: LocaleManager, private val aiServerProvider: AIServerProvider, private val commandManager: CommandManager, private val alertManager: AlertManager, private val databaseManager: DatabaseManager, private val debugManager: DebugManager, private val packetListener: PacketListener, private val damageEvent: DamageEvent, private val slothApi: SlothApi, private val adventure: BukkitAudiences, private val coroutines: SlothCoroutines, )</ID>
-    <ID>LongParameterList:SlothPlayer.kt$SlothPlayer$( val player: Player, private val plugin: SlothAC, aiSequence: Int, alertManager: AlertManager, dataCollectorManager: DataCollectorManager, aiServerProvider: AIServerProvider, val exemptManager: ExemptManager, private val scheduler: SchedulerService, checkManagerFactory: CheckManager.Factory, punishmentManagerFactory: PunishmentManager.Factory, )</ID>
+    <ID>LongParameterList:ShardCore.kt$ShardCore$( private val plugin: Shard, private val playerDataManager: PlayerDataManager, private val configManager: ConfigManager, private val localeManager: LocaleManager, private val aiServerProvider: AIServerProvider, private val commandManager: CommandManager, private val alertManager: AlertManager, private val databaseManager: DatabaseManager, private val debugManager: DebugManager, private val packetListener: PacketListener, private val damageEvent: DamageEvent, private val shardApi: ShardApi, private val adventure: BukkitAudiences, private val coroutines: ShardCoroutines, )</ID>
+    <ID>LongParameterList:ShardPlayer.kt$ShardPlayer$( val player: Player, private val plugin: Shard, aiSequence: Int, alertManager: AlertManager, dataCollectorManager: DataCollectorManager, aiServerProvider: AIServerProvider, val exemptManager: ExemptManager, private val scheduler: SchedulerService, checkManagerFactory: CheckManager.Factory, punishmentManagerFactory: PunishmentManager.Factory, )</ID>
     <ID>LongParameterList:TickData.kt$TickData.Companion$( builder: FlatBufferBuilder, deltaYaw: Float, deltaPitch: Float, accelYaw: Float, accelPitch: Float, jerkPitch: Float, jerkYaw: Float, gcdErrorYaw: Float, gcdErrorPitch: Float, )</ID>
     <ID>LoopWithTooManyJumpStatements:LatencyUtils.kt$LatencyUtils$while</ID>
     <ID>LoopWithTooManyJumpStatements:PacketListener.kt$PacketListener$while</ID>
@@ -119,12 +119,12 @@
     <ID>MagicNumber:ProfileCommand.kt$ProfileCommand$50</ID>
     <ID>MagicNumber:PunishmentManager.kt$PunishmentManager$20.0</ID>
     <ID>MagicNumber:PunishmentManager.kt$PunishmentManager$50.0</ID>
-    <ID>MagicNumber:SlothMath.kt$SlothMath$0.15</ID>
-    <ID>MagicNumber:SlothMath.kt$SlothMath$1e-3</ID>
-    <ID>MagicNumber:SlothMath.kt$SlothMath$3</ID>
-    <ID>MagicNumber:SlothMath.kt$SlothMath$8</ID>
-    <ID>MagicNumber:SlothPlayer.kt$SlothPlayer$0.0002</ID>
-    <ID>MagicNumber:SlothPlayer.kt$SlothPlayer$0.03</ID>
+    <ID>MagicNumber:ShardMath.kt$ShardMath$0.15</ID>
+    <ID>MagicNumber:ShardMath.kt$ShardMath$1e-3</ID>
+    <ID>MagicNumber:ShardMath.kt$ShardMath$3</ID>
+    <ID>MagicNumber:ShardMath.kt$ShardMath$8</ID>
+    <ID>MagicNumber:ShardPlayer.kt$ShardPlayer$0.0002</ID>
+    <ID>MagicNumber:ShardPlayer.kt$ShardPlayer$0.03</ID>
     <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.MonitorSettingsTable$16</ID>
     <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.MonitorSettingsTable$36</ID>
     <ID>MagicNumber:SqlViolationDatabase.kt$SqlViolationDatabase.PlayerLogins$36</ID>
@@ -155,8 +155,8 @@
     <ID>NestedBlockDepth:DataCollectorManager.kt$DataCollectorManager$private fun archiveAndSaveSessions(sessions: List&lt;DataSession>, archiveName: String)</ID>
     <ID>PrintStackTrace:CommandManager.kt$CommandManager$e</ID>
     <ID>PrintStackTrace:LatencyUtils.kt$LatencyUtils$ex</ID>
-    <ID>PrintStackTrace:SlothAC.kt$SlothAC$e</ID>
-    <ID>PrintStackTrace:SlothCore.kt$SlothCore$e</ID>
+    <ID>PrintStackTrace:Shard.kt$Shard$e</ID>
+    <ID>PrintStackTrace:ShardCore.kt$ShardCore$e</ID>
     <ID>ReturnCount:AIServer.kt$AIServer$override fun send(payload: ByteBuffer): CompletableFuture&lt;String></ID>
     <ID>ReturnCount:AiApiImpl.kt$AiApiImpl$override fun getSnapshot(playerId: UUID): Optional&lt;AiSnapshot></ID>
     <ID>ReturnCount:AiCheck.kt$AiCheck$override fun onPacketReceive(event: PacketReceiveEvent)</ID>
@@ -170,9 +170,9 @@
     <ID>ReturnCount:MonitorApiImpl.kt$MonitorApiImpl$override fun getSnapshot(playerId: UUID): Optional&lt;MonitorSnapshot></ID>
     <ID>ReturnCount:MonitorCommand.kt$MonitorCommand$private fun parseToggle(raw: String?): Boolean?</ID>
     <ID>ReturnCount:PacketListener.kt$PacketListener$override fun onPacketReceive(event: PacketReceiveEvent)</ID>
-    <ID>ReturnCount:PacketListener.kt$PacketListener$private fun checkRotationQueue( player: SlothPlayer, flying: WrapperPlayClientPlayerFlying, ): Boolean</ID>
-    <ID>ReturnCount:PacketListener.kt$PacketListener$private fun checkTeleportQueue( player: SlothPlayer, flying: WrapperPlayClientPlayerFlying, ): Boolean</ID>
-    <ID>ReturnCount:PacketListener.kt$PacketListener$private fun handleTransaction(event: PacketReceiveEvent, slothPlayer: SlothPlayer): Boolean</ID>
+    <ID>ReturnCount:PacketListener.kt$PacketListener$private fun checkRotationQueue( player: ShardPlayer, flying: WrapperPlayClientPlayerFlying, ): Boolean</ID>
+    <ID>ReturnCount:PacketListener.kt$PacketListener$private fun checkTeleportQueue( player: ShardPlayer, flying: WrapperPlayClientPlayerFlying, ): Boolean</ID>
+    <ID>ReturnCount:PacketListener.kt$PacketListener$private fun handleTransaction(event: PacketReceiveEvent, shardPlayer: ShardPlayer): Boolean</ID>
     <ID>ReturnCount:PunishmentManager.kt$PunishmentManager$private suspend fun executeCommand( group: PunishGroup, vl: Int, verbose: String, command: String, playerName: String, checkName: String, )</ID>
     <ID>ReturnCount:SchedulerService.kt$SchedulerService$fun runSync(player: Player?, task: Runnable): TaskHandle</ID>
     <ID>ReturnCount:TimeUtil.kt$TimeUtil$@JvmStatic fun formatTimeAgo(timestamp: Instant, lm: LocaleManager): String</ID>
@@ -193,23 +193,23 @@
     <ID>TooGenericExceptionCaught:LatencyUtils.kt$LatencyUtils$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:PunishmentApiImpl.kt$PunishmentApiImpl$e: Exception</ID>
     <ID>TooGenericExceptionCaught:PunishmentManager.kt$PunishmentManager$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:SlothAC.kt$SlothAC$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:SlothCore.kt$SlothCore$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:Shard.kt$Shard$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ShardCore.kt$ShardCore$e: Exception</ID>
     <ID>TooGenericExceptionCaught:TimeUtil.kt$TimeUtil$ex: Exception</ID>
     <ID>TooManyFunctions:AIServerProvider.kt$AIServerProvider : Supplier</ID>
     <ID>TooManyFunctions:BatchingAiTransport.kt$BatchingAiTransport : AiTransport</ID>
     <ID>TooManyFunctions:ConfigManager.kt$ConfigManager</ID>
     <ID>TooManyFunctions:MessageUtil.kt$MessageUtil</ID>
-    <ID>TooManyFunctions:MonitorCommand.kt$MonitorCommand : SlothCommandListener</ID>
+    <ID>TooManyFunctions:MonitorCommand.kt$MonitorCommand : ShardCommandListener</ID>
     <ID>TooManyFunctions:PacketListener.kt$PacketListener : PacketListenerAbstract</ID>
     <ID>TooManyFunctions:PunishmentManager.kt$PunishmentManager</ID>
     <ID>TooManyFunctions:SqlViolationDatabase.kt$SqlViolationDatabase : ViolationDatabase</ID>
     <ID>TooManyFunctions:TickData.kt$TickData$Companion</ID>
     <ID>TooManyFunctions:TickDataSequence.kt$TickDataSequence$Companion</ID>
     <ID>TooManyFunctions:ViolationDatabase.kt$ViolationDatabase</ID>
-    <ID>UnusedPrivateProperty:SlothPlayer.kt$SlothPlayer$aiServerProvider: AIServerProvider</ID>
-    <ID>UnusedPrivateProperty:SlothPlayer.kt$SlothPlayer$alertManager: AlertManager</ID>
-    <ID>UnusedPrivateProperty:SlothPlayer.kt$SlothPlayer$dataCollectorManager: DataCollectorManager</ID>
+    <ID>UnusedPrivateProperty:ShardPlayer.kt$ShardPlayer$aiServerProvider: AIServerProvider</ID>
+    <ID>UnusedPrivateProperty:ShardPlayer.kt$ShardPlayer$alertManager: AlertManager</ID>
+    <ID>UnusedPrivateProperty:ShardPlayer.kt$ShardPlayer$dataCollectorManager: DataCollectorManager</ID>
     <ID>UnusedPrivateProperty:TickData.kt$TickData.Companion$i</ID>
     <ID>WildcardImport:SqlViolationDatabase.kt$import org.jetbrains.exposed.v1.core.*</ID>
   </CurrentIssues>

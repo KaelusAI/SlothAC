@@ -1,4 +1,4 @@
-# SlothAC main configuration
+# Shard main configuration
 # Copyright 2026 KaelusAI, DefineOutside and contributors, Licensed under GPLv3.
 
 # Do not change this value manually.
@@ -11,7 +11,7 @@ ai:
   # Enable AI check?
   enabled: true
   # URL for the AI inference API.
-  server: "https://api.kaelus.dev/v1/inference"
+  server: "https://api.shard.ac/v1/inference"
   # The number of ticks to send in a sequence to the AI.
   sequence: 40
   # The number of ticks to wait before sending the next sequence.
@@ -96,8 +96,8 @@ exemptions:
   bedrock: true
 
 connect:
-  # Base URL of the Sloth panel (used by "/sloth connect").
-  panel-url: "https://panel.kaelus.dev"
+  # Base URL of the Shard panel (used by "/shard connect").
+  panel-url: "https://app.shard.ac"
 
 client-brand:
   # This means it won't broadcast their brand to operators if the brand matches the following regexes
@@ -107,7 +107,7 @@ client-brand:
     - "^lunarclient:v\\d+\\.\\d+\\.\\d+-\\d{4}$"
     - "^Feather Fabric$"
     - "^labymod$"
-  # Sloth will blacklist specific Forge versions which include built-in Reach hacks (Forge 1.18.2 to 1.19.3).
+  # Shard will blacklist specific Forge versions which include built-in Reach hacks (Forge 1.18.2 to 1.19.3).
   # Setting this option to false will allow said clients to connect to the server. Disable this at your own risk.
   disconnect-blacklisted-forge-versions: true
 
@@ -126,7 +126,7 @@ database:
   mysql:
     host: "localhost"
     port: 3306
-    database: "slothac"
+    database: "shard"
     username: "root"
     password: "password"
     use-ssl: false
@@ -154,13 +154,13 @@ cross-server:
   # Name shown as the origin tag for alerts coming from this server, e.g. [Lobby].
   server-name: "server-1"
   # Redis pub/sub channel. Every server in the network must use the same value.
-  channel: "slothac:alerts"
+  channel: "shard:alerts"
   # Which alert types to mirror across servers.
   alerts:
     # Violation flags (rule breakers).
     regular: true
     # Suspicious-buffer alerts. When on, this also shares the live suspicious-players list
-    # (/sloth suspicious list|top) across servers. Nothing is written to Redis unless this is on;
+    # (/shard suspicious list|top) across servers. Nothing is written to Redis unless this is on;
     # list entries carry a TTL, so offline servers and players that calm down drop off by themselves.
     suspicious: true
   # Tuning for the shared suspicious-players list (only used when cross-server.alerts.suspicious is on).
@@ -179,12 +179,12 @@ suspicious:
 # See MC-12363. This only matters on very old server versions.
 cancel-duplicate-packet: true
 
-# If true, Sloth will always cancel duplicate movement packets even on modern servers.
+# If true, Shard will always cancel duplicate movement packets even on modern servers.
 # This is more aggressive and can throw away duplicate packet rotation/use-item context.
 force-cancel-duplicate-packet: false
 
 # Whether rotation from duplicate packets should still be processed.
-# When true, Sloth ignores yaw/pitch from duplicate movement packets.
+# When true, Shard ignores yaw/pitch from duplicate movement packets.
 # Set this to false if you want duplicate packets to keep updating rotation.
 ignore-duplicate-packet-rotation: true
 

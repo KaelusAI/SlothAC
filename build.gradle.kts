@@ -15,7 +15,7 @@ plugins {
 
 BuildConfig.init(project)
 
-group = "space.kaelus.sloth"
+group = "ac.shard"
 
 version = "1.0"
 
@@ -148,29 +148,29 @@ tasks.shadowJar {
   mergeServiceFiles()
 
   if (BuildConfig.shadePE) {
-    relocate("com.github.retrooper.packetevents", "space.kaelus.sloth.libs.packetevents.api")
-    relocate("io.github.retrooper.packetevents", "space.kaelus.sloth.libs.packetevents.impl")
-    relocate("net.kyori", "space.kaelus.sloth.libs.kyori")
+    relocate("com.github.retrooper.packetevents", "ac.shard.libs.packetevents.api")
+    relocate("io.github.retrooper.packetevents", "ac.shard.libs.packetevents.impl")
+    relocate("net.kyori", "ac.shard.libs.kyori")
   }
-  relocate("org.bstats", "space.kaelus.sloth.libs.bstats")
-  relocate("org.incendo", "space.kaelus.sloth.libs.incendo")
-  relocate("io.leangen.geantyref", "space.kaelus.sloth.libs.geantyref")
-  relocate("it.unimi.dsi.fastutil", "space.kaelus.sloth.libs.fastutil")
-  relocate("com.google.flatbuffers", "space.kaelus.sloth.libs.flatbuffers")
-  relocate("com.fasterxml.jackson", "space.kaelus.sloth.libs.jackson")
-  relocate("com.zaxxer", "space.kaelus.sloth.libs.hikari")
-  relocate("org.slf4j", "space.kaelus.sloth.libs.slf4j")
-  relocate("org.jetbrains.exposed", "space.kaelus.sloth.libs.jetbrains.exposed")
-  relocate("org.spongepowered.configurate", "space.kaelus.sloth.libs.configurate")
-  relocate("org.yaml.snakeyaml", "space.kaelus.sloth.libs.snakeyaml")
-  relocate("ru.vyarus.yaml.updater", "space.kaelus.sloth.libs.yamlupdater")
-  relocate("org.joml", "space.kaelus.sloth.libs.joml")
-  relocate("org.koin", "space.kaelus.sloth.libs.koin")
-  relocate("org.flywaydb", "space.kaelus.sloth.libs.flyway")
-  relocate("tools.jackson", "space.kaelus.sloth.libs.tools.jackson")
-  relocate("io.lettuce", "space.kaelus.sloth.libs.lettuce")
-  relocate("reactor", "space.kaelus.sloth.libs.reactor")
-  relocate("org.reactivestreams", "space.kaelus.sloth.libs.reactivestreams")
+  relocate("org.bstats", "ac.shard.libs.bstats")
+  relocate("org.incendo", "ac.shard.libs.incendo")
+  relocate("io.leangen.geantyref", "ac.shard.libs.geantyref")
+  relocate("it.unimi.dsi.fastutil", "ac.shard.libs.fastutil")
+  relocate("com.google.flatbuffers", "ac.shard.libs.flatbuffers")
+  relocate("com.fasterxml.jackson", "ac.shard.libs.jackson")
+  relocate("com.zaxxer", "ac.shard.libs.hikari")
+  relocate("org.slf4j", "ac.shard.libs.slf4j")
+  relocate("org.jetbrains.exposed", "ac.shard.libs.jetbrains.exposed")
+  relocate("org.spongepowered.configurate", "ac.shard.libs.configurate")
+  relocate("org.yaml.snakeyaml", "ac.shard.libs.snakeyaml")
+  relocate("ru.vyarus.yaml.updater", "ac.shard.libs.yamlupdater")
+  relocate("org.joml", "ac.shard.libs.joml")
+  relocate("org.koin", "ac.shard.libs.koin")
+  relocate("org.flywaydb", "ac.shard.libs.flyway")
+  relocate("tools.jackson", "ac.shard.libs.tools.jackson")
+  relocate("io.lettuce", "ac.shard.libs.lettuce")
+  relocate("reactor", "ac.shard.libs.reactor")
+  relocate("org.reactivestreams", "ac.shard.libs.reactivestreams")
 }
 
 tasks.register<PrintFilePathTask>("printShadowJarPath") {
@@ -224,8 +224,8 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 }
 
 bukkit {
-  name = "SlothAC"
-  main = "space.kaelus.sloth.SlothAC"
+  name = "Shard"
+  main = "ac.shard.Shard"
   version = project.version.toString()
   apiVersion = "1.13"
   authors = listOf("Kaelus")
@@ -250,141 +250,199 @@ bukkit {
     )
 
   permissions {
-    register("sloth.help") {
+    register("shard.help") {
       description = "Allows usage of the help command"
       default = Permission.Default.OP
     }
-    register("sloth.alerts") {
+    register("shard.alerts") {
       description = "Receive alerts for violations"
       default = Permission.Default.OP
     }
-    register("sloth.alerts.enable-on-join") {
+    register("shard.alerts.enable-on-join") {
       description = "Automatically enables alerts on join"
       default = Permission.Default.OP
     }
-    register("sloth.reload") {
+    register("shard.reload") {
       description = "Allows reloading the config"
       default = Permission.Default.OP
     }
-    register("sloth.connect") {
-      description = "Allows linking/unlinking this server to the Sloth web panel"
+    register("shard.connect") {
+      description = "Allows linking/unlinking this server to the Shard web panel"
       default = Permission.Default.OP
     }
-    register("sloth.exempt") {
+    register("shard.exempt") {
       description = "Exempt from all checks"
       default = Permission.Default.FALSE
     }
-    register("sloth.disable") {
+    register("shard.disable") {
       description = "Disables anti-cheat tracking for the player"
       default = Permission.Default.FALSE
     }
-    register("sloth.datacollect") {
+    register("shard.datacollect") {
       description = "Parent permission for data collection commands"
       default = Permission.Default.OP
       children =
         listOf(
-          "sloth.datacollect.start",
-          "sloth.datacollect.stop",
-          "sloth.datacollect.cancel",
-          "sloth.datacollect.status",
+          "shard.datacollect.start",
+          "shard.datacollect.stop",
+          "shard.datacollect.cancel",
+          "shard.datacollect.status",
         )
     }
-    register("sloth.datacollect.start") {
+    register("shard.datacollect.start") {
       description = "Allows starting a data collection session"
       default = Permission.Default.FALSE
     }
-    register("sloth.datacollect.stop") {
+    register("shard.datacollect.stop") {
       description = "Allows stopping a data collection session"
       default = Permission.Default.FALSE
     }
-    register("sloth.datacollect.cancel") {
+    register("shard.datacollect.cancel") {
       description = "Allows cancelling a data collection session without saving"
       default = Permission.Default.FALSE
     }
-    register("sloth.datacollect.status") {
+    register("shard.datacollect.status") {
       description = "Allows viewing data collection session status"
       default = Permission.Default.FALSE
     }
-    register("sloth.prob") {
-      description = "Allows usage of the probability display command"
+    register("shard.monitor") {
+      description = "Allows usage of the monitor command"
       default = Permission.Default.OP
-      children = listOf("sloth.prob.self", "sloth.prob.list")
+      children = listOf("shard.monitor.self", "shard.monitor.list")
     }
-    register("sloth.prob.self") {
-      description = "Allows enabling the probability display only on self"
+    register("shard.monitor.self") {
+      description = "Allows enabling the monitor display only on self"
       default = Permission.Default.FALSE
     }
-    register("sloth.prob.list") {
+    register("shard.monitor.list") {
       description = "Allows listing active monitor sessions"
       default = Permission.Default.OP
     }
-    register("sloth.view") {
+    register("shard.prob") {
+      description = "Legacy alias for shard.monitor"
+      default = Permission.Default.FALSE
+      children = listOf("shard.monitor")
+    }
+    register("shard.prob.self") {
+      description = "Legacy alias for shard.monitor.self"
+      default = Permission.Default.FALSE
+      children = listOf("shard.monitor.self")
+    }
+    register("shard.prob.list") {
+      description = "Legacy alias for shard.monitor.list"
+      default = Permission.Default.FALSE
+      children = listOf("shard.monitor.list")
+    }
+    register("shard.view") {
       description = "Allows toggling AI nametag view above players"
       default = Permission.Default.OP
     }
-    register("sloth.profile") {
+    register("shard.profile") {
       description = "Allows usage of the profile command"
       default = Permission.Default.OP
     }
-    register("sloth.brand") {
+    register("shard.brand") {
       description = "Receive client brand notifications"
       default = Permission.Default.OP
     }
-    register("sloth.brand.enable-on-join") {
+    register("shard.brand.enable-on-join") {
       description = "Automatically enables brand notifications on join"
       default = Permission.Default.OP
     }
-    register("sloth.history") {
+    register("shard.history") {
       description = "Allows viewing a player's violation history"
       default = Permission.Default.OP
     }
-    register("sloth.logs") {
+    register("shard.logs") {
       description = "Allows viewing recent violations"
       default = Permission.Default.OP
     }
-    register("sloth.stats") {
+    register("shard.stats") {
       description = "Allows viewing server statistics"
       default = Permission.Default.OP
     }
-    register("sloth.exempt.manage") {
+    register("shard.exempt.manage") {
       description = "Allows managing punishment exemptions for players"
       default = Permission.Default.OP
     }
-    register("sloth.punish.manage") {
+    register("shard.punish.manage") {
       description = "Allows managing player punishments"
       default = Permission.Default.OP
     }
-    register("sloth.suspicious") {
+    register("shard.suspicious") {
       description = "Permission for suspicious player commands"
       default = Permission.Default.OP
       children =
         listOf(
-          "sloth.suspicious.alerts",
-          "sloth.suspicious.list",
-          "sloth.suspicious.top",
-          "sloth.suspicious.flagged",
+          "shard.suspicious.alerts",
+          "shard.suspicious.list",
+          "shard.suspicious.top",
+          "shard.suspicious.flagged",
         )
     }
-    register("sloth.suspicious.alerts") {
+    register("shard.suspicious.alerts") {
       description = "Allows toggling suspicious player alerts"
       default = Permission.Default.OP
     }
-    register("sloth.suspicious.alerts.enable-on-join") {
+    register("shard.suspicious.alerts.enable-on-join") {
       description = "Automatically enables suspicious alerts on join"
       default = Permission.Default.OP
     }
-    register("sloth.suspicious.list") {
+    register("shard.suspicious.list") {
       description = "Allows listing suspicious players"
       default = Permission.Default.OP
     }
-    register("sloth.suspicious.top") {
+    register("shard.suspicious.top") {
       description = "Allows viewing the top suspicious player"
       default = Permission.Default.OP
     }
-    register("sloth.suspicious.flagged") {
+    register("shard.suspicious.flagged") {
       description = "Allows viewing online players with recorded flags"
       default = Permission.Default.OP
     }
+
+    listOf(
+        "help",
+        "alerts",
+        "alerts.enable-on-join",
+        "reload",
+        "connect",
+        "exempt",
+        "exempt.manage",
+        "disable",
+        "datacollect",
+        "datacollect.start",
+        "datacollect.stop",
+        "datacollect.cancel",
+        "datacollect.status",
+        "prob",
+        "prob.self",
+        "prob.list",
+        "monitor",
+        "monitor.self",
+        "monitor.list",
+        "view",
+        "profile",
+        "brand",
+        "brand.enable-on-join",
+        "history",
+        "logs",
+        "stats",
+        "punish.manage",
+        "suspicious",
+        "suspicious.alerts",
+        "suspicious.alerts.enable-on-join",
+        "suspicious.list",
+        "suspicious.top",
+        "suspicious.flagged",
+      )
+      .forEach { node ->
+        register("sloth.$node") {
+          description = "Legacy alias for shard.$node"
+          default = Permission.Default.FALSE
+          children = listOf("shard.$node")
+        }
+      }
   }
 }
 

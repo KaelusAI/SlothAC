@@ -1,4 +1,4 @@
-prefix: "<gradient:#8e9eab:#eef2f3>Sloth</gradient> <gray>|</gray>"
+prefix: "<gradient:#8e9eab:#eef2f3>Shard</gradient> <gray>|</gray>"
 
 alerts-enabled: "<prefix> <color:#eef2f3>Уведомления</color> <color:#a8ff78>включены</color>."
 alerts-disabled: "<prefix> <color:#eef2f3>Уведомления</color> <color:#ff4b2b>выключены</color>."
@@ -7,9 +7,9 @@ alerts-format: "<prefix> <hover:show_text:'<gray>Нажми, чтобы теле
 player-not-found: "<prefix> <color:#ff4b2b>Игрок исключен или находится вне сети!</color>"
 run-as-player: "<prefix> <color:#ff4b2b>Эту команду могут использовать только игроки!</color>"
 reload-start: "<prefix> <color:#f6d365>Перезагрузка конфигурации...</color>"
-reload-success: "<prefix> <color:#a8ff78>Конфигурация Sloth перезагружена.</color>"
+reload-success: "<prefix> <color:#a8ff78>Конфигурация Shard перезагружена.</color>"
 storage:
-  degraded: "<prefix> <color:#f6d365>Постоянное хранилище недоступно. Sloth использует временное хранилище для данных. После перезапуска они исчезнут.</color>"
+  degraded: "<prefix> <color:#f6d365>Постоянное хранилище недоступно. Shard использует временное хранилище для данных. После перезапуска они исчезнут.</color>"
 
 connect:
   disabled: "<prefix> <color:#ff4b2b>Подключение отключено: укажите</color> <white>connect.panel-url</white> <color:#ff4b2b>в config.yml.</color>"
@@ -22,18 +22,18 @@ connect:
   success: "<prefix> <color:#a8ff78>Подключено!</color> <gray>Сервер привязан к</gray> <white><server></white><gray>.</gray>"
   success-needs-plan: "<prefix> <color:#a8ff78>Подключено к</color> <white><server></white><color:#f6d365>, но у него ещё нет активного плана. Выберите план в панели, чтобы включить ИИ-проверки.</color>"
   denied: "<prefix> <color:#ff4b2b>Подключение отклонено в панели.</color>"
-  expired: "<prefix> <color:#ff4b2b>Код истёк.</color> <gray>Запустите</gray> <white>/sloth connect</white> <gray>снова.</gray>"
+  expired: "<prefix> <color:#ff4b2b>Код истёк.</color> <gray>Запустите</gray> <white>/shard connect</white> <gray>снова.</gray>"
   error: "<prefix> <color:#ff4b2b>Не удалось подключиться:</color> <white><reason></white>"
-  disconnect-confirm: "<prefix> <color:#f6d365>Это отвяжет сервер и отзовёт его ключ.</color> <gray>Введите</gray> <white>/sloth disconnect confirm</white> <gray>в течение 30 сек, чтобы продолжить.</gray>"
-  disconnect-no-pending: "<prefix> <gray>Нечего подтверждать. Сначала введите</gray> <white>/sloth disconnect</white><gray>.</gray>"
+  disconnect-confirm: "<prefix> <color:#f6d365>Это отвяжет сервер и отзовёт его ключ.</color> <gray>Введите</gray> <white>/shard disconnect confirm</white> <gray>в течение 30 сек, чтобы продолжить.</gray>"
+  disconnect-no-pending: "<prefix> <gray>Нечего подтверждать. Сначала введите</gray> <white>/shard disconnect</white><gray>.</gray>"
   disconnect-success: "<prefix> <color:#a8ff78>Отключено.</color> <gray>IP сервера удалён из панели, локальный ключ очищен.</gray>"
   disconnect-local-only: "<prefix> <color:#f6d365>Локальная привязка удалена, но панель недоступна.</color> <gray>Отзовите этот сервер в панели вручную.</gray>"
   disconnect-nothing: "<prefix> <gray>Этот сервер не привязан.</gray>"
-  status-header: "<gradient:#8e9eab:#eef2f3>--- Подключение Sloth ---</gradient>"
+  status-header: "<gradient:#8e9eab:#eef2f3>--- Подключение Shard ---</gradient>"
   status-linked: "<color:#a8ff78> ▶ Привязан к <white><server></white></color>"
   status-key: "<gray> Ключ: <white><key></white></gray>"
   status-server-url: "<gray> Инференс: <white><url></white></gray>"
-  status-not-linked: "<prefix> <gray>Этот сервер не привязан. Запустите</gray> <white>/sloth connect</white><gray>.</gray>"
+  status-not-linked: "<prefix> <gray>Этот сервер не привязан. Запустите</gray> <white>/shard connect</white><gray>.</gray>"
 
 datacollect:
   details-required: "<prefix> <color:#ff4b2b>Требуется указать детали для типов LEGIT и CHEAT.</color>"
@@ -131,7 +131,7 @@ cross-server:
 
 stats:
   invalid-period: "<prefix> <color:#ff4b2b>Неверный период. Используй: <options>.</color>"
-  header: "<gradient:#8e9eab:#eef2f3>---- [ Статистика Sloth ] ----</gradient>"
+  header: "<gradient:#8e9eab:#eef2f3>---- [ Статистика Shard ] ----</gradient>"
   flags: " <color:#00b4db>Флагов (<period>):</color> <white><flags></white> <gray>(<flags_per_hour>/ч)</gray>"
   flags-hover: "<gray>Срабатываний в час:</gray> <white><flags_per_hour></white><newline><gray>Открыть недавние логи</gray>"
   players: " <color:#00b4db>Игроков (<period>):</color> <white><players></white>"
@@ -143,7 +143,7 @@ stats:
   suspicious-hover: "<white><suspicious_now></white> <gray>из</gray> <white><online_players></white> <gray>онлайн-игроков</gray><newline><gray>Порог:</gray> <white>AI буфер > <suspicious_threshold></white>"
 
 help:
-  - "<gradient:#8e9eab:#eef2f3>-------- [ Sloth ] --------</gradient>"
+  - "<gradient:#8e9eab:#eef2f3>-------- [ Shard ] --------</gradient>"
   - " <color:#00b4db>/<command> alerts</color> <gray>- Включить/выключить оповещения о нарушениях</gray>"
   - " <color:#00b4db>/<command> brands</color> <gray>- Включить/выключить оповещения о клиенте игрока</gray>"
   - " <color:#00b4db>/<command> suspicious alerts</color> <gray>- Включить/выключить оповещения о подозрительных игроках</gray>"
@@ -158,7 +158,7 @@ help:
   - " <color:#00b4db>/<command> punish reset <player></color> <gray>- Сбросить все уровни нарушений игрока</gray>"
   - " <color:#00b4db>/<command> exempt</color> <gray>- Исключить игрока из проверок</gray>"
   - " <color:#00b4db>/<command> reload</color> <gray>- Перезагрузить конфигурацию</gray>"
-  - " <color:#00b4db>/<command> connect</color> <gray>- Привязать сервер к панели Sloth</gray>"
+  - " <color:#00b4db>/<command> connect</color> <gray>- Привязать сервер к панели Shard</gray>"
   - " <color:#00b4db>/<command> disconnect</color> <gray>- Отвязать сервер от панели</gray>"
   - " <color:#00b4db>/<command> connect status</color> <gray>- Показать статус подключения к панели</gray>"
   - " <color:#00b4db>/<command> help</color> <gray>- Показать это справочное сообщение</gray>"

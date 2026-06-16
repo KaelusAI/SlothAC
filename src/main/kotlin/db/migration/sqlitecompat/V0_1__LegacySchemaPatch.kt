@@ -1,13 +1,13 @@
 /*
- * This file is part of SlothAC - https://github.com/KaelusAI/SlothAC
+ * This file is part of Shard - https://github.com/KaelusAI/Shard
  * Copyright (C) 2026 KaelusAI
  *
- * SlothAC is free software: you can redistribute it and/or modify
+ * Shard is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * SlothAC is distributed in the hope that it will be useful,
+ * Shard is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
