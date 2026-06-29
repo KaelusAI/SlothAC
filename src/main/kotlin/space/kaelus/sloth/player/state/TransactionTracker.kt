@@ -46,18 +46,23 @@ class TransactionTracker {
       return
     }
 
-    val transactionId = (-1 * (transactionIdCounter.getAndIncrement() and 0x7FFF)).toShort()
+    val raw = transactionIdCounter.getAndIncrement() and 0x7FFF
+    val modern =
+      PacketEvents.getAPI()
+        .serverManager
+        .version
+        .isNewerThanOrEquals(com.github.retrooper.packetevents.manager.server.ServerVersion.V_1_17)
+
+    val transactionId =
+      if (modern) {
+        (if (raw == 0) 0x7FFF else raw).toShort()
+      } else {
+        (-1 * raw).toShort()
+      }
     didWeSendThatTrans.add(transactionId)
 
     val packet =
-      if (
-        PacketEvents.getAPI()
-          .serverManager
-          .version
-          .isNewerThanOrEquals(
-            com.github.retrooper.packetevents.manager.server.ServerVersion.V_1_17
-          )
-      ) {
+      if (modern) {
         WrapperPlayServerPing(transactionId.toInt())
       } else {
         WrapperPlayServerWindowConfirmation(0, transactionId, false)
