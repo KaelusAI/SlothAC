@@ -227,7 +227,7 @@ bukkit {
   main = "space.kaelus.sloth.SlothAC"
   version = project.version.toString()
   apiVersion = "1.13"
-  authors = listOf("KaelusMC")
+  authors = listOf("KaelusAI")
   website = "https://dsc.gg/kaelus"
   foliaSupported = true
   if (!BuildConfig.shadePE) {

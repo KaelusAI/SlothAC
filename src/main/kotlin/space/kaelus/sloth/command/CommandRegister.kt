@@ -1,6 +1,6 @@
 /*
- * This file is part of SlothAC - https://github.com/KaelusMC/SlothAC
- * Copyright (C) 2026 KaelusMC
+ * This file is part of SlothAC - https://github.com/KaelusAI/SlothAC
+ * Copyright (C) 2026 KaelusAI
  *
  * This file contains code derived from GrimAC.
  * The original authors of GrimAC are credited below.

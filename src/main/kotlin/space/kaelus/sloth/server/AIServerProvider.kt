@@ -1,6 +1,6 @@
 /*
- * This file is part of SlothAC - https://github.com/KaelusMC/SlothAC
- * Copyright (C) 2026 KaelusMC
+ * This file is part of SlothAC - https://github.com/KaelusAI/SlothAC
+ * Copyright (C) 2026 KaelusAI
  *
  * SlothAC is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

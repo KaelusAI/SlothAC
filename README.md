@@ -3,8 +3,8 @@
   <p>An AI-powered, free and open-source anti-cheat for Minecraft servers.</p>
 
   <p>
-    <a href="https://github.com/KaelusMC/SlothAC/actions/workflows/ci.yml">
-      <img alt="CI" src="https://github.com/KaelusMC/SlothAC/actions/workflows/ci.yml/badge.svg">
+    <a href="https://github.com/KaelusAI/SlothAC/actions/workflows/ci.yml">
+      <img alt="CI" src="https://github.com/KaelusAI/SlothAC/actions/workflows/ci.yml/badge.svg">
     </a>
     <a href="https://www.codefactor.io/repository/github/kaelusmc/slothac">
       <img alt="CodeFactor" src="https://www.codefactor.io/repository/github/kaelusmc/slothac/badge">
@@ -12,8 +12,8 @@
     <a href="https://dsc.gg/kaelus">
       <img alt="Discord" src="https://img.shields.io/discord/1297490292349468715?style=flat&label=Discord&logo=discord&color=7289DA&logoColor=white">
     </a>
-    <a href="https://github.com/KaelusMC/SlothAC/">
-      <img alt="Views" src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FKaelusMC%2FSlothAC%2FREADME.md&label=Views&countColor=%23555555&style=flat&labelStyle=none">
+    <a href="https://github.com/KaelusAI/SlothAC/">
+      <img alt="Views" src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FKaelusAI%2FSlothAC%2FREADME.md&label=Views&countColor=%23555555&style=flat&labelStyle=none">
     </a>
   </p>
 
@@ -45,7 +45,7 @@ If API access is not available yet, disable the AI check for now.
 
 ## Installation
 
-1. Download the latest release from [GitHub Releases](https://github.com/KaelusMC/SlothAC/releases).
+1. Download the latest release from [GitHub Releases](https://github.com/KaelusAI/SlothAC/releases).
 2. Place the main `SlothAC-<version>.jar` in the server `plugins/` directory.
 3. Start the server once so Sloth can generate its configuration files.
 4. Run `/sloth connect` and authorize the server in the panel.
@@ -86,7 +86,7 @@ For the full command list, use `/sloth help` in game.
 ## Building from source
 
 ```bash
-git clone https://github.com/KaelusMC/SlothAC.git
+git clone https://github.com/KaelusAI/SlothAC.git
 cd SlothAC
 ./gradlew shadowJar
 ```
@@ -99,7 +99,7 @@ build/libs/SlothAC-<version>.jar
 
 ## Help, bugs, and discussion
 
-- Bug reports: [GitHub Issues](https://github.com/KaelusMC/SlothAC/issues)
+- Bug reports: [GitHub Issues](https://github.com/KaelusAI/SlothAC/issues)
 - Community / support: [Discord](https://dsc.gg/kaelus)
 
 Issue reports should include:
