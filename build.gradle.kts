@@ -19,7 +19,7 @@ group = "space.kaelus.sloth"
 
 version = "1.0"
 
-val packetEventsSpigot = "com.github.KaelusMC.packetevents:packetevents-spigot:v2026.04.26-f4aaadc"
+val packetEventsSpigot = "com.github.retrooper:packetevents-spigot:2.13.0"
 
 repositories {
   mavenCentral()
