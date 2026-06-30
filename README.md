@@ -26,6 +26,8 @@
 
 ## What Sloth is
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3fb1cae2617b40f2a63d4a6ff8fe6959)](https://app.codacy.com/gh/KaelusAI/SlothAC?utm_source=github.com&utm_medium=referral&utm_content=KaelusAI/SlothAC&utm_campaign=Badge_Grade)
+
 Sloth is an open-source anti-cheat plugin for Minecraft servers.
 
 ## Important before you install
