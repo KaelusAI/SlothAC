@@ -6,8 +6,8 @@
     <a href="https://github.com/KaelusAI/SlothAC/actions/workflows/ci.yml">
       <img alt="CI" src="https://github.com/KaelusAI/SlothAC/actions/workflows/ci.yml/badge.svg">
     </a>
-    <a href="https://www.codefactor.io/repository/github/kaelusai/slothac">
-      <img alt="CodeFactor" src="https://www.codefactor.io/repository/github/kaelusai/slothac/badge">
+    <a href="https://app.codacy.com/gh/KaelusAI/SlothAC/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade">
+      <img alt="Codacy" src="https://app.codacy.com/project/badge/Grade/fb90bca03b36460faab2cf86fc2178bd?branch=main">
     </a>
     <a href="https://dsc.gg/kaelus">
       <img alt="Discord" src="https://img.shields.io/discord/1297490292349468715?style=flat&label=Discord&logo=discord&color=7289DA&logoColor=white">
