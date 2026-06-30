@@ -142,6 +142,7 @@ tasks.shadowJar {
     exclude(dependency("io.lettuce:lettuce-core"))
     exclude(dependency("io.projectreactor:reactor-core"))
     exclude(dependency("org.reactivestreams:reactive-streams"))
+    exclude(dependency("net.kyori:adventure-text-serializer-gson:.*"))
   }
 
   mergeServiceFiles()
