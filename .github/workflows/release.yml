@@ -28,12 +28,19 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build shadow JAR
+      - name: Build shaded JAR
         run: ./gradlew shadowJar
 
-      - name: Resolve shadow JAR path
-        id: shadow-jar
+      - name: Resolve shaded JAR path
+        id: shaded-jar
         run: echo "path=$(./gradlew -q printShadowJarPath)" >> "$GITHUB_OUTPUT"
+
+      - name: Build unbundled JAR
+        run: ./gradlew shadowJar -PshadePE=false
+
+      - name: Resolve unbundled JAR path
+        id: unbundled-jar
+        run: echo "path=$(./gradlew -q printShadowJarPath -PshadePE=false)" >> "$GITHUB_OUTPUT"
 
       - name: Generate tag
         id: tag
@@ -46,4 +53,6 @@ jobs:
           name: "${{ steps.tag.outputs.tag }}"
           body: |
             Automatic release from commit ${{ github.event.workflow_run.head_sha }}.
-          files: ${{ steps.shadow-jar.outputs.path }}
+          files: |
+            ${{ steps.shaded-jar.outputs.path }}
+            ${{ steps.unbundled-jar.outputs.path }}
