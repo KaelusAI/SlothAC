@@ -229,7 +229,7 @@ bukkit {
   version = project.version.toString()
   apiVersion = "1.13"
   authors = listOf("Kaelus")
-  website = "https://dsc.gg/kaelus"
+  website = "https://discord.gg/kaelus"
   foliaSupported = true
   if (!BuildConfig.shadePE) {
     depend = listOf("packetevents")

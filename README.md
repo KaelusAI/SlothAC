@@ -9,7 +9,7 @@
     <a href="https://app.codacy.com/gh/KaelusAI/Shard/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade">
       <img alt="Codacy" src="https://app.codacy.com/project/badge/Grade/fb90bca03b36460faab2cf86fc2178bd?branch=main">
     </a>
-    <a href="https://dsc.gg/kaelus">
+    <a href="https://discord.gg/kaelus">
       <img alt="Discord" src="https://img.shields.io/discord/1297490292349468715?style=flat&label=Discord&logo=discord&color=7289DA&logoColor=white">
     </a>
     <a href="https://github.com/KaelusMC/Shard/">
@@ -30,7 +30,7 @@ Shard is an open-source anti-cheat plugin for Minecraft servers.
 
 ## Important before you install
 
-Shard's AI check uses the official Shard API. Access is arranged in the [Discord server](https://dsc.gg/kaelus).
+Shard's AI check uses the official Shard API. Access is arranged in the [Discord server](https://discord.gg/kaelus).
 
 To connect a server to the API, run `/shard connect` and authorize it in the [Shard panel](https://panel.shard.ac).
 
@@ -100,7 +100,7 @@ build/libs/Shard-<version>.jar
 ## Help, bugs, and discussion
 
 - Bug reports: [GitHub Issues](https://github.com/KaelusAI/Shard/issues)
-- Community / support: [Discord](https://dsc.gg/kaelus)
+- Community / support: [Discord](https://discord.gg/kaelus)
 
 Issue reports should include:
 

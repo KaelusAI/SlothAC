@@ -9,7 +9,7 @@
     <a href="https://app.codacy.com/gh/KaelusAI/Shard/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade">
       <img alt="Codacy" src="https://app.codacy.com/project/badge/Grade/fb90bca03b36460faab2cf86fc2178bd?branch=main">
     </a>
-    <a href="https://dsc.gg/kaelus">
+    <a href="https://discord.gg/kaelus">
       <img alt="Discord" src="https://img.shields.io/discord/1297490292349468715?style=flat&label=Discord&logo=discord&color=7289DA&logoColor=white">
     </a>
     <a href="https://github.com/KaelusMC/Shard/">
@@ -30,7 +30,7 @@ Shard - это AI-античит с открытым исходным кодом
 
 ## Важный момент перед установкой
 
-AI-проверка Shard использует официальный Shard API. Доступ запрашивается в [Discord](https://dsc.gg/kaelus).
+AI-проверка Shard использует официальный Shard API. Доступ запрашивается в [Discord](https://discord.gg/kaelus).
 
 Чтобы подключить сервер к API, выполните `/shard connect` и подтвердите привязку в [панели Shard](https://panel.shard.ac).
 
@@ -100,7 +100,7 @@ build/libs/Shard-<version>.jar
 ## Помощь, баг-репорты и обсуждение
 
 - Баг-репорты: [GitHub Issues](https://github.com/KaelusAI/Shard/issues)
-- Сообщество и поддержка: [Discord](https://dsc.gg/kaelus)
+- Сообщество и поддержка: [Discord](https://discord.gg/kaelus)
 
 При создании issue рекомендуется приложить:
 
