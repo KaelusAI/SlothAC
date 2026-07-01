@@ -20,7 +20,6 @@ connect:
   waiting: "<prefix> <color:#f6d365>Ожидание подтверждения в панели...</color>"
   restarted: "<prefix> <gray>Предыдущий запрос на привязку отменён.</gray>"
   success: "<prefix> <color:#a8ff78>Подключено!</color> <gray>Сервер привязан к</gray> <white><server></white><gray>.</gray>"
-  success-needs-plan: "<prefix> <color:#a8ff78>Подключено к</color> <white><server></white><color:#f6d365>, но у него ещё нет активного плана. Выберите план в панели, чтобы включить ИИ-проверки.</color>"
   denied: "<prefix> <color:#ff4b2b>Подключение отклонено в панели.</color>"
   expired: "<prefix> <color:#ff4b2b>Код истёк.</color> <gray>Запустите</gray> <white>/shard connect</white> <gray>снова.</gray>"
   error: "<prefix> <color:#ff4b2b>Не удалось подключиться:</color> <white><reason></white>"
@@ -33,7 +32,11 @@ connect:
   status-linked: "<color:#a8ff78> ▶ Привязан к <white><server></white></color>"
   status-key: "<gray> Ключ: <white><key></white></gray>"
   status-server-url: "<gray> Инференс: <white><url></white></gray>"
+  status-quota: "<gray> Использование: <white><used>%/100%</white></gray>"
+  status-quota-unavailable: "<gray> Использование: <white>неизвестно</white></gray>"
   status-not-linked: "<prefix> <gray>Этот сервер не привязан. Запустите</gray> <white>/shard connect</white><gray>.</gray>"
+  link-success: "<prefix> <color:#a8ff78>Привязано!</color> <gray>Сервер привязан к</gray> <white><server></white><gray>.</gray>"
+  link-invalid: "<prefix> <color:#ff4b2b>Код неверный или истёк.</color> <gray>Сгенерируйте новый в панели.</gray>"
 
 datacollect:
   details-required: "<prefix> <color:#ff4b2b>Требуется указать детали для типов LEGIT и CHEAT.</color>"

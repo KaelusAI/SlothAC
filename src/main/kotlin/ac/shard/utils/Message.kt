@@ -37,7 +37,6 @@ enum class Message(val path: String) {
   CONNECT_WAITING("connect.waiting"),
   CONNECT_RESTARTED("connect.restarted"),
   CONNECT_SUCCESS("connect.success"),
-  CONNECT_SUCCESS_NEEDS_PLAN("connect.success-needs-plan"),
   CONNECT_DENIED("connect.denied"),
   CONNECT_EXPIRED("connect.expired"),
   CONNECT_ERROR("connect.error"),
@@ -50,7 +49,11 @@ enum class Message(val path: String) {
   CONNECT_STATUS_LINKED("connect.status-linked"),
   CONNECT_STATUS_KEY("connect.status-key"),
   CONNECT_STATUS_SERVER_URL("connect.status-server-url"),
+  CONNECT_STATUS_QUOTA("connect.status-quota"),
+  CONNECT_STATUS_QUOTA_UNAVAILABLE("connect.status-quota-unavailable"),
   CONNECT_STATUS_NOT_LINKED("connect.status-not-linked"),
+  CONNECT_LINK_SUCCESS("connect.link-success"),
+  CONNECT_LINK_INVALID("connect.link-invalid"),
 
   // Brand
   BRAND_ALERTS_ENABLED("brand.alerts-enabled"),

@@ -20,7 +20,6 @@ connect:
   waiting: "<prefix> <color:#f6d365>Waiting for you to authorize in the panel...</color>"
   restarted: "<prefix> <gray>Cancelled the previous link request.</gray>"
   success: "<prefix> <color:#a8ff78>Connected!</color> <gray>This server is linked to</gray> <white><server></white><gray>.</gray>"
-  success-needs-plan: "<prefix> <color:#a8ff78>Connected to</color> <white><server></white><color:#f6d365>, but it has no active plan yet. Pick a plan in the panel to enable AI checks.</color>"
   denied: "<prefix> <color:#ff4b2b>Connection was declined in the panel.</color>"
   expired: "<prefix> <color:#ff4b2b>The code expired.</color> <gray>Run</gray> <white>/shard connect</white> <gray>again.</gray>"
   error: "<prefix> <color:#ff4b2b>Connect failed:</color> <white><reason></white>"
@@ -33,7 +32,11 @@ connect:
   status-linked: "<color:#a8ff78> ▶ Linked to <white><server></white></color>"
   status-key: "<gray> Key: <white><key></white></gray>"
   status-server-url: "<gray> Inference: <white><url></white></gray>"
+  status-quota: "<gray> Usage: <white><used>%/100%</white></gray>"
+  status-quota-unavailable: "<gray> Usage: <white>unknown</white></gray>"
   status-not-linked: "<prefix> <gray>This server is not linked. Run</gray> <white>/shard connect</white><gray>.</gray>"
+  link-success: "<prefix> <color:#a8ff78>Linked!</color> <gray>This server is now linked to</gray> <white><server></white><gray>.</gray>"
+  link-invalid: "<prefix> <color:#ff4b2b>Invalid or expired code.</color> <gray>Generate a new one in the panel.</gray>"
 
 datacollect:
   details-required: "<prefix> <color:#ff4b2b>Details are required for LEGIT and CHEAT types.</color>"

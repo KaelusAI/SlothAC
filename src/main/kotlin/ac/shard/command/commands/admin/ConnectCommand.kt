@@ -23,12 +23,14 @@ import ac.shard.config.ConfigManager
 import ac.shard.connect.ConnectService
 import ac.shard.connect.Credentials
 import ac.shard.connect.CredentialsStore
+import ac.shard.connect.LinkResult
 import ac.shard.connect.PollResult
 import ac.shard.connect.RevokeResult
 import ac.shard.connect.StartResult
 import ac.shard.scheduler.SchedulerService
 import ac.shard.sender.Sender
 import ac.shard.server.AIServerProvider
+import ac.shard.telemetry.TelemetryService
 import ac.shard.utils.Message
 import ac.shard.utils.MessageUtil
 import java.net.URI
@@ -45,8 +47,9 @@ import org.bukkit.command.CommandSender
 import org.incendo.cloud.CommandManager
 import org.incendo.cloud.context.CommandContext
 import org.incendo.cloud.kotlin.extension.buildAndRegister
+import org.incendo.cloud.parser.standard.StringParser
 
-@Suppress("TooManyFunctions", "ReturnCount")
+@Suppress("TooManyFunctions", "ReturnCount", "LongParameterList")
 class ConnectCommand(
   private val plugin: Shard,
   private val connectService: ConnectService,
@@ -54,6 +57,7 @@ class ConnectCommand(
   private val configManager: ConfigManager,
   private val aiServerProvider: AIServerProvider,
   private val scheduler: SchedulerService,
+  private val telemetryService: TelemetryService,
 ) : ShardCommand {
 
   private val active = AtomicReference<ConnectSession?>(null)
@@ -61,7 +65,10 @@ class ConnectCommand(
 
   override fun register(manager: CommandManager<Sender>) {
     manager.buildAndRegister("shard", aliases = arrayOf("shardac", "sloth", "slothac")) {
-      literal("connect").permission(PERMISSION).handler(this@ConnectCommand::connect)
+      literal("connect")
+        .optional("code", StringParser.stringParser())
+        .permission(PERMISSION)
+        .handler(this@ConnectCommand::connect)
     }
     manager.buildAndRegister("shard", aliases = arrayOf("shardac", "sloth", "slothac")) {
       literal("disconnect").permission(PERMISSION).handler(this@ConnectCommand::disconnect)
@@ -80,7 +87,60 @@ class ConnectCommand(
     }
   }
 
+  private fun redeem(context: CommandContext<Sender>, code: String) {
+    val sender = context.sender()
+    val native = sender.nativeSender
+    if (!sender.isTrustedConsole && credentialsStore.isLinked()) {
+      MessageUtil.sendMessage(native, Message.CONNECT_CONSOLE_ONLY)
+      return
+    }
+    if (!checkPanelUrl(native)) {
+      return
+    }
+    val uuid = sender.uniqueId
+    val isConsole = sender.isConsole
+    scheduler.runAsync {
+      val instanceId = credentialsStore.instanceId()
+      val hostname = runCatching { java.net.InetAddress.getLocalHost().hostName }.getOrNull()
+      when (
+        val result = connectService.redeem(code, instanceId, hostname, plugin.description.version)
+      ) {
+        is LinkResult.Linked -> {
+          credentialsStore.write(
+            Credentials(
+              secretKey = result.secretKey,
+              serverId = result.serverId,
+              serverName = result.serverName,
+              allowlistedIp = result.allowlistedIp,
+              inferenceUrl = result.inferenceUrl,
+            )
+          )
+          applyConfigReload()
+          notify(uuid, isConsole) {
+            MessageUtil.sendMessage(
+              it,
+              Message.CONNECT_LINK_SUCCESS,
+              "server",
+              result.serverName ?: "your server",
+            )
+          }
+        }
+        LinkResult.InvalidOrExpired ->
+          notify(uuid, isConsole) { MessageUtil.sendMessage(it, Message.CONNECT_LINK_INVALID) }
+        is LinkResult.Error ->
+          notify(uuid, isConsole) {
+            MessageUtil.sendMessage(it, Message.CONNECT_ERROR, "reason", result.message)
+          }
+      }
+    }
+  }
+
   private fun connect(context: CommandContext<Sender>) {
+    val code = context.getOrDefault("code", "")
+    if (code.isNotBlank()) {
+      redeem(context, code)
+      return
+    }
     val sender = context.sender()
     val native = sender.nativeSender
     if (!sender.isTrustedConsole && credentialsStore.isLinked()) {
@@ -96,7 +156,7 @@ class ConnectCommand(
     val uuid = sender.uniqueId
     val isConsole = sender.isConsole
     scheduler.runAsync {
-      when (val result = connectService.start()) {
+      when (val result = connectService.start(credentialsStore.instanceId())) {
         is StartResult.Started -> {
           val session =
             ConnectSession(
@@ -206,6 +266,29 @@ class ConnectCommand(
       "url",
       configManager.aiServerUrl,
     )
+    val cached = telemetryService.quotaSnapshot
+    if (cached != null) {
+      MessageUtil.sendMessage(
+        native,
+        Message.CONNECT_STATUS_QUOTA,
+        "used",
+        cached.usedPercent.toString(),
+      )
+    } else {
+      val sender = context.sender()
+      val uuid = sender.uniqueId
+      val isConsole = sender.isConsole
+      scheduler.runAsync {
+        val pct = telemetryService.fetchQuota()
+        notify(uuid, isConsole) {
+          if (pct != null) {
+            MessageUtil.sendMessage(it, Message.CONNECT_STATUS_QUOTA, "used", pct.toString())
+          } else {
+            MessageUtil.sendMessage(it, Message.CONNECT_STATUS_QUOTA_UNAVAILABLE)
+          }
+        }
+      }
+    }
   }
 
   private fun scheduleNextPoll(session: ConnectSession) {
@@ -258,13 +341,17 @@ class ConnectCommand(
         serverId = approved.serverId,
         serverName = approved.serverName,
         allowlistedIp = approved.allowlistedIp,
+        inferenceUrl = approved.inferenceUrl,
       )
     )
     applyConfigReload()
-    val message =
-      if (approved.needsPlan) Message.CONNECT_SUCCESS_NEEDS_PLAN else Message.CONNECT_SUCCESS
     notify(session) {
-      MessageUtil.sendMessage(it, message, "server", approved.serverName ?: "your server")
+      MessageUtil.sendMessage(
+        it,
+        Message.CONNECT_SUCCESS,
+        "server",
+        approved.serverName ?: "your server",
+      )
     }
   }
 

@@ -240,8 +240,8 @@ class ConfigManager(private val plugin: Shard, private val credentialsStore: Cre
     aiServerUrl = config.getString("ai.server", "")
     val configKey = config.getString("ai.api-key", "API-KEY")
     aiApiKey = configKey
-    credentialsStore
-      .read()
+    val credentials = credentialsStore.read()
+    credentials
       ?.secretKey
       ?.takeIf { it.isNotBlank() }
       ?.let {
@@ -252,6 +252,13 @@ class ConfigManager(private val plugin: Shard, private val credentialsStore: Cre
               "the config key is ignored. Remove it from config.yml."
           )
         }
+      }
+    credentials
+      ?.inferenceUrl
+      ?.takeIf { it.isNotBlank() }
+      ?.let {
+        aiServerUrl = it
+        aiEnabled = true
       }
 
     connectPanelUrl = config.getString("connect.panel-url", "https://app.shard.ac")

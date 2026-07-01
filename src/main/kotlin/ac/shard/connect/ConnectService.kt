@@ -49,8 +49,8 @@ sealed interface PollResult {
     val secretKey: String,
     val serverId: String?,
     val serverName: String?,
-    val needsPlan: Boolean,
     val allowlistedIp: String?,
+    val inferenceUrl: String?,
   ) : PollResult
 
   data object Denied : PollResult
@@ -66,17 +66,35 @@ sealed interface RevokeResult {
   data class Error(val message: String) : RevokeResult
 }
 
+sealed interface LinkResult {
+  data class Linked(
+    val secretKey: String,
+    val serverId: String?,
+    val serverName: String?,
+    val allowlistedIp: String?,
+    val inferenceUrl: String?,
+  ) : LinkResult
+
+  data object InvalidOrExpired : LinkResult
+
+  data class Error(val message: String) : LinkResult
+}
+
 @Suppress("TooGenericExceptionCaught", "ReturnCount")
 class ConnectService(private val plugin: Shard, private val configManager: ConfigManager) {
   private val mapper = ObjectMapper()
   private val client: HttpClient = HttpClient.newBuilder().connectTimeout(CONNECT_TIMEOUT).build()
 
-  fun start(): StartResult {
+  fun start(instanceId: String? = null): StartResult {
     return try {
       val (code, node) =
         post(
           "/api/v1/device/start",
-          mapOf("client_id" to CLIENT_ID, "plugin_version" to plugin.description.version),
+          mapOf(
+            "client_id" to CLIENT_ID,
+            "plugin_version" to plugin.description.version,
+            "instance_id" to instanceId,
+          ),
         ) ?: return StartResult.Error("Panel URL is not configured.")
       when (code) {
         HTTP_OK -> {
@@ -126,8 +144,8 @@ class ConnectService(private val plugin: Shard, private val configManager: Confi
           secretKey = secret,
           serverId = server.path("id").asText("").ifBlank { null },
           serverName = server.path("name").asText("").ifBlank { null },
-          needsPlan = server.path("needs_plan").asBoolean(false),
           allowlistedIp = node.path("allowlisted_ip").asText("").ifBlank { null },
+          inferenceUrl = node.path("inference_url").asText("").ifBlank { null },
         )
       } else {
         when (node.path("error").asText("")) {
@@ -166,6 +184,51 @@ class ConnectService(private val plugin: Shard, private val configManager: Confi
     }
   }
 
+  fun redeem(
+    userCode: String,
+    instanceId: String,
+    hostname: String?,
+    pluginVersion: String?,
+  ): LinkResult {
+    return try {
+      val (code, node) =
+        post(
+          "/api/v1/device/redeem",
+          mapOf(
+            "user_code" to userCode,
+            "instance_id" to instanceId,
+            "hostname" to hostname,
+            "plugin_version" to pluginVersion,
+          ),
+        ) ?: return LinkResult.Error("Panel URL is not configured.")
+      when {
+        code == HTTP_OK && node.path("status").asText("") == "linked" -> {
+          val secret = node.path("secret_key").asText("")
+          if (secret.isBlank()) {
+            LinkResult.Error("Panel linked but returned no key.")
+          } else {
+            val server = node.path("server")
+            LinkResult.Linked(
+              secretKey = secret,
+              serverId = server.path("id").asText("").ifBlank { null },
+              serverName = server.path("name").asText("").ifBlank { null },
+              allowlistedIp = node.path("allowlisted_ip").asText("").ifBlank { null },
+              inferenceUrl = node.path("inference_url").asText("").ifBlank { null },
+            )
+          }
+        }
+        code == TOO_MANY_REQUESTS ->
+          LinkResult.Error("Too many attempts. Please wait a few minutes.")
+        code == GONE || node.path("error").asText("") == "expired_token" ->
+          LinkResult.InvalidOrExpired
+        node.path("error").asText("") == "invalid_request" -> LinkResult.Error("Invalid code.")
+        else -> LinkResult.Error("Panel returned HTTP $code.")
+      }
+    } catch (e: Exception) {
+      LinkResult.Error("Network error: ${e.message}")
+    }
+  }
+
   fun cancel(deviceCode: String) {
     try {
       post("/api/v1/device/cancel", mapOf("device_code" to deviceCode))
@@ -197,6 +260,7 @@ class ConnectService(private val plugin: Shard, private val configManager: Confi
     const val CLIENT_ID = "shard-plugin"
     const val HTTP_OK = 200
     const val TOO_MANY_REQUESTS = 429
+    const val GONE = 410
     const val DEFAULT_EXPIRES = 600L
     const val DEFAULT_INTERVAL = 5L
     const val MIN_EXPIRES_SECONDS = 60L
