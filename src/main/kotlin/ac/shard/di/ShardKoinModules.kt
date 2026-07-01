@@ -93,6 +93,7 @@ import ac.shard.scheduler.SchedulerService
 import ac.shard.sender.Sender
 import ac.shard.sender.SenderFactory
 import ac.shard.server.AIServerProvider
+import ac.shard.telemetry.TelemetryService
 import java.util.logging.Logger
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import org.bukkit.command.CommandSender
@@ -117,6 +118,7 @@ private fun coreModule(plugin: Shard) = module {
   singleOf(::CredentialsStore)
   singleOf(::ConfigManager)
   singleOf(::ConnectService)
+  singleOf(::TelemetryService)
   singleOf(::LocaleManager)
   singleOf(::DatabaseManager)
   singleOf(::DebugManager)

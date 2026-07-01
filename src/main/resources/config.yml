@@ -99,6 +99,12 @@ connect:
   # Base URL of the Shard panel (used by "/shard connect").
   panel-url: "https://app.shard.ac"
 
+telemetry:
+  # Periodically report this server's liveness and online player count so linked
+  # instances show as online in the panel. Sends a small request every 30 seconds.
+  # Set to false to disable all reporting.
+  enabled: true
+
 client-brand:
   # This means it won't broadcast their brand to operators if the brand matches the following regexes
   ignored-clients:

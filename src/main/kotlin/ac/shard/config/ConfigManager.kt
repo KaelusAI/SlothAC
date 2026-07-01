@@ -53,6 +53,8 @@ class ConfigManager(private val plugin: Shard, private val credentialsStore: Cre
   var connectPanelUrl: String = ""
     private set
 
+  private var telemetryEnabled = true
+
   var aiSequence: Int = 0
   var aiStep: Int = 0
     private set
@@ -156,6 +158,8 @@ class ConfigManager(private val plugin: Shard, private val credentialsStore: Cre
 
   fun isAiEnabled(): Boolean = aiEnabled
 
+  fun isTelemetryEnabled(): Boolean = telemetryEnabled
+
   fun isAiDamageReductionEnabled(): Boolean = aiDamageReductionEnabled
 
   fun isAiWorldGuardEnabled(): Boolean = aiWorldGuardEnabled
@@ -251,6 +255,7 @@ class ConfigManager(private val plugin: Shard, private val credentialsStore: Cre
       }
 
     connectPanelUrl = config.getString("connect.panel-url", "https://app.shard.ac")
+    telemetryEnabled = config.getBoolean("telemetry.enabled", true)
     aiSequence = config.getInt("ai.sequence", 40)
     aiStep = config.getInt("ai.step", 10)
     aiContinuous = config.getBoolean("ai.continuous", false)

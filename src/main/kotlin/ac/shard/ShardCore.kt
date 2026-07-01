@@ -34,6 +34,7 @@ import ac.shard.redis.CrossServerSuspiciousService
 import ac.shard.redis.RedisManager
 import ac.shard.scheduler.SchedulerService
 import ac.shard.server.AIServerProvider
+import ac.shard.telemetry.TelemetryService
 import ac.shard.utils.MessageUtil
 import com.github.retrooper.packetevents.PacketEvents
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
@@ -61,6 +62,7 @@ constructor(
   private val adventure: BukkitAudiences,
   private val coroutines: ShardCoroutines,
   private val scheduler: SchedulerService,
+  private val telemetryService: TelemetryService,
 ) {
   fun enable() {
     commandManager.registerCommands()
@@ -79,9 +81,11 @@ constructor(
       crossServerAlertService.start()
       crossServerSuspiciousService.start()
     }
+    telemetryService.start()
   }
 
   fun disable() {
+    runCatching { telemetryService.stop() }
     plugin.server.servicesManager.unregister(ShardApi::class.java, shardApi)
     runCatching { playerDataManager.saveAllBuffersSync() }
     runCatching { aiServerProvider.shutdownTransport() }
