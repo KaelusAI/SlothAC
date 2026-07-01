@@ -70,7 +70,7 @@ class AIServer(
         .POST(HttpRequest.BodyPublishers.ofByteArray(body))
         .timeout(if (batch) BATCH_REQUEST_TIMEOUT else REQUEST_TIMEOUT)
     if (batch) {
-      builder.header("X-Shard-Batch", "1")
+      builder.header("X-Batch", "1")
     }
 
     return HTTP_CLIENT.sendAsync(builder.build(), HttpResponse.BodyHandlers.ofString())
@@ -95,7 +95,7 @@ class AIServer(
   private fun catchResponse(response: HttpResponse<String>): String {
     val statusCode = response.statusCode()
     if (statusCode >= 300 || statusCode < 200) {
-      if (statusCode >= 500 || statusCode == 403) {
+      if (statusCode >= HTTP_SERVER_ERROR_MIN || statusCode in COOLDOWN_STATUS_CODES) {
         apiCooldown.recordFailure()
       }
 
@@ -136,6 +136,7 @@ class AIServer(
   enum class ResponseCode(val httpCode: Int) {
     SUCCESS(200),
     BAD_REQUEST(400),
+    INSUFFICIENT_CREDITS(HTTP_PAYMENT_REQUIRED),
     UNAUTHORIZED(403),
     NOT_FOUND(404),
     PAYLOAD_TOO_LARGE(413),
@@ -185,6 +186,15 @@ class AIServer(
     private const val BATCH_COUNT_SIZE = 2
     private const val BATCH_ITEM_HEADER_SIZE = 4
     const val BATCH_MAX_ITEMS = 256
+
+    const val HTTP_PAYMENT_REQUIRED = 402
+    private const val HTTP_SERVER_ERROR_MIN = 500
+    private val COOLDOWN_STATUS_CODES =
+      setOf(
+        ResponseCode.UNAUTHORIZED.httpCode,
+        ResponseCode.RATE_LIMITED.httpCode,
+        HTTP_PAYMENT_REQUIRED,
+      )
 
     private val HTTP_CLIENT: HttpClient =
       HttpClient.newBuilder()
