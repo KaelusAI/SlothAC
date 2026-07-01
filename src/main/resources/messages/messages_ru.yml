@@ -64,6 +64,7 @@ monitor:
   list-header: "<prefix> <color:#a8ff78>Активные сессии (<count>):</color>"
   list-entry: " <gray>•</gray> <white><viewer></white> <gray>→</gray> <white><target></white>"
   list-empty: "<prefix> <color:#f6d365>Нет активных сессий мониторинга.</color>"
+  prob-deprecated: "<prefix> <color:#f6d365>Команда <white>prob</white> устарела. Используйте <white>/shard monitor</white>.</color>"
 
 view:
   enabled: "<prefix> <color:#a8ff78>Режим наблюдения включен.</color>"

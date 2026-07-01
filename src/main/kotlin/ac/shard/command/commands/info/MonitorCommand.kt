@@ -179,18 +179,14 @@ class MonitorCommand(
     }
 
     manager.buildAndRegister("shard", aliases = arrayOf("shardac", "sloth", "slothac")) {
-      literal("prob")
-        .permission("shard.prob.self")
-        .mutate { it.apply(CommandRegister.REQUIREMENT_FACTORY.create(PlayerSenderRequirement)) }
-        .handler(this@MonitorCommand::toggleMonitorSelf)
+      literal("prob").permission("shard.monitor.self").handler(this@MonitorCommand::deprecatedProb)
     }
 
     manager.buildAndRegister("shard", aliases = arrayOf("shardac", "sloth", "slothac")) {
       literal("prob")
-        .permission("shard.prob.self")
-        .mutate { it.apply(CommandRegister.REQUIREMENT_FACTORY.create(PlayerSenderRequirement)) }
+        .permission("shard.monitor.self")
         .required("target", PlayerParser.playerParser())
-        .handler(this@MonitorCommand::toggleMonitor)
+        .handler(this@MonitorCommand::deprecatedProb)
     }
   }
 
@@ -226,6 +222,10 @@ class MonitorCommand(
     val sender = context.sender()
     val player = sender.player ?: return
     toggleMonitorFor(player, player)
+  }
+
+  private fun deprecatedProb(context: CommandContext<Sender>) {
+    MessageUtil.sendMessage(context.sender().nativeSender, Message.MONITOR_PROB_DEPRECATED)
   }
 
   private fun stopMonitor(context: CommandContext<Sender>) {

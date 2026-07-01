@@ -87,6 +87,7 @@ enum class Message(val path: String) {
   MONITOR_LIST_HEADER("monitor.list-header"),
   MONITOR_LIST_ENTRY("monitor.list-entry"),
   MONITOR_LIST_EMPTY("monitor.list-empty"),
+  MONITOR_PROB_DEPRECATED("monitor.prob-deprecated"),
   VIEW_ENABLED("view.enabled"),
   VIEW_DISABLED("view.disabled"),
 
