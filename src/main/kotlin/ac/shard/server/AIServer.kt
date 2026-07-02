@@ -94,16 +94,12 @@ class AIServer(
 
   private fun catchResponse(response: HttpResponse<String>): String {
     val statusCode = response.statusCode()
-    if (statusCode >= 300 || statusCode < 200) {
-      if (statusCode >= HTTP_SERVER_ERROR_MIN || statusCode in COOLDOWN_STATUS_CODES) {
+    if (statusCode !in HTTP_OK_MIN..HTTP_OK_MAX) {
+      val error = ShardError.parse(statusCode, response.body())
+      if (error.backoff) {
         apiCooldown.recordFailure()
       }
-
-      throw RequestException(
-        ResponseCode.fromStatusCode(statusCode),
-        "HTTP Status $statusCode: ${response.body()}",
-        responseBody = response.body(),
-      )
+      throw error
     }
 
     apiCooldown.recordSuccess()
@@ -121,15 +117,23 @@ class AIServer(
       return CompletableFuture.failedFuture(cause)
     }
 
-    if (cause !is HttpTimeoutException) {
+    val isTimeout = cause is HttpTimeoutException
+    if (!isTimeout) {
       apiCooldown.recordFailure()
     }
 
-    val code =
-      if (cause is HttpTimeoutException) ResponseCode.TIMEOUT else ResponseCode.NETWORK_ERROR
+    val code = if (isTimeout) ResponseCode.TIMEOUT else ResponseCode.NETWORK_ERROR
 
     return CompletableFuture.failedFuture(
-      RequestException(code, "Request failed: " + cause.message, cause)
+      RequestException(
+        code = code,
+        message = "Request failed: " + cause.message,
+        serverCode = code.name,
+        httpStatus = code.httpCode,
+        retryable = true,
+        backoff = !isTimeout,
+        cause = cause,
+      )
     )
   }
 
@@ -153,30 +157,34 @@ class AIServer(
     companion object {
       @JvmStatic
       fun fromStatusCode(code: Int): ResponseCode {
-        for (value in entries) if (value.httpCode == code) return value
-        return if (code >= 500) SERVER_ERROR else if (code >= 400) BAD_REQUEST else UNKNOWN_ERROR
+        entries
+          .firstOrNull { it.httpCode == code }
+          ?.let {
+            return it
+          }
+        return when {
+          code == HTTP_UNAUTHORIZED -> UNAUTHORIZED
+          code >= HTTP_SERVER_ERROR_MIN -> SERVER_ERROR
+          code >= HTTP_CLIENT_ERROR_MIN -> BAD_REQUEST
+          else -> UNKNOWN_ERROR
+        }
       }
     }
   }
 
-  class RequestException : RuntimeException {
-    val code: ResponseCode
-    val responseBody: String?
-
-    constructor(
-      code: ResponseCode,
-      message: String,
-      responseBody: String? = null,
-    ) : super(message) {
-      this.code = code
-      this.responseBody = responseBody
-    }
-
-    constructor(code: ResponseCode, message: String, cause: Throwable) : super(message, cause) {
-      this.code = code
-      this.responseBody = null
-    }
-  }
+  @Suppress("LongParameterList")
+  class RequestException(
+    val code: ResponseCode,
+    message: String,
+    val serverCode: String? = null,
+    val serverMessage: String? = null,
+    val details: Map<String, Any?>? = null,
+    val httpStatus: Int? = null,
+    val retryable: Boolean = false,
+    val backoff: Boolean = false,
+    val responseBody: String? = null,
+    cause: Throwable? = null,
+  ) : RuntimeException(message, cause)
 
   companion object {
     private val CONNECT_TIMEOUT = Duration.ofSeconds(10)
@@ -188,13 +196,11 @@ class AIServer(
     const val BATCH_MAX_ITEMS = 256
 
     const val HTTP_PAYMENT_REQUIRED = 402
+    private const val HTTP_UNAUTHORIZED = 401
+    private const val HTTP_OK_MIN = 200
+    private const val HTTP_OK_MAX = 299
+    private const val HTTP_CLIENT_ERROR_MIN = 400
     private const val HTTP_SERVER_ERROR_MIN = 500
-    private val COOLDOWN_STATUS_CODES =
-      setOf(
-        ResponseCode.UNAUTHORIZED.httpCode,
-        ResponseCode.RATE_LIMITED.httpCode,
-        HTTP_PAYMENT_REQUIRED,
-      )
 
     private val HTTP_CLIENT: HttpClient =
       HttpClient.newBuilder()

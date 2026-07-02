@@ -20,15 +20,6 @@ package ac.shard.ai
 import ac.shard.server.AIServer
 
 object InferenceRetryPolicy {
-  fun shouldRetry(throwable: Throwable): Boolean {
-    if (throwable !is AIServer.RequestException) return false
-    return when (throwable.code) {
-      AIServer.ResponseCode.TIMEOUT,
-      AIServer.ResponseCode.NETWORK_ERROR,
-      AIServer.ResponseCode.SERVER_ERROR,
-      AIServer.ResponseCode.SERVICE_UNAVAILABLE,
-      AIServer.ResponseCode.RATE_LIMITED -> true
-      else -> false
-    }
-  }
+  fun shouldRetry(throwable: Throwable): Boolean =
+    throwable is AIServer.RequestException && throwable.retryable
 }

@@ -20,6 +20,7 @@ package ac.shard.ai
 import ac.shard.platform.scheduler.TaskHandle
 import ac.shard.scheduler.SchedulerService
 import ac.shard.server.AIServer
+import ac.shard.server.ShardError
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import java.nio.ByteBuffer
@@ -137,17 +138,26 @@ class BatchingAiTransport(
   }
 
   private fun completeItem(item: PendingItem, result: BatchItemResult) {
-    when {
-      result.probability != null ->
-        item.future.complete(probabilityResponseJson(result.probability))
-      result.code == "INVALID_SEQUENCE" -> recoverInvalidSequence(item)
-      else ->
-        item.future.completeExceptionally(
-          AIServer.RequestException(
-            codeFromBatchItem(result.code),
-            result.error ?: "Batch item failed",
-          )
-        )
+    val probability = result.probability
+    if (probability != null) {
+      item.future.complete(probabilityResponseJson(probability))
+      return
+    }
+    val errorNode = result.error
+    if (errorNode == null) {
+      item.future.completeExceptionally(
+        AIServer.RequestException(AIServer.ResponseCode.PARSE_ERROR, "Batch item missing result")
+      )
+      return
+    }
+    val error = ShardError.fromError(errorNode, HTTP_OK)
+    if (
+      error.code == AIServer.ResponseCode.INVALID_SEQUENCE &&
+        error.details?.get("expected_sequence") == null
+    ) {
+      recoverInvalidSequence(item)
+    } else {
+      item.future.completeExceptionally(error)
     }
   }
 
@@ -168,20 +178,10 @@ class BatchingAiTransport(
     return results.map { node ->
       BatchItemResult(
         probability = node.get("probability")?.takeIf { it.isNumber }?.asDouble(),
-        error = node.get("error")?.takeIf { it.isTextual }?.asText(),
-        code = node.get("code")?.takeIf { it.isTextual }?.asText(),
+        error = node.get("error")?.takeIf { it.isObject },
       )
     }
   }
-
-  private fun codeFromBatchItem(itemCode: String?): AIServer.ResponseCode =
-    when (itemCode) {
-      "INVALID_SEQUENCE" -> AIServer.ResponseCode.INVALID_SEQUENCE
-      "BAD_REQUEST" -> AIServer.ResponseCode.BAD_REQUEST
-      "INTERNAL_SERVER_ERROR",
-      "INTERNAL" -> AIServer.ResponseCode.SERVER_ERROR
-      else -> AIServer.ResponseCode.UNKNOWN_ERROR
-    }
 
   private fun probabilityResponseJson(probability: Double): String =
     """{"probability":$probability}"""
@@ -207,13 +207,10 @@ class BatchingAiTransport(
 
   private data class PendingItem(val payload: ByteArray, val future: CompletableFuture<String>)
 
-  private data class BatchItemResult(
-    val probability: Double?,
-    val error: String?,
-    val code: String?,
-  )
+  private data class BatchItemResult(val probability: Double?, val error: JsonNode?)
 
   companion object {
+    private const val HTTP_OK = 200
     private val OBJECT_MAPPER = ObjectMapper()
   }
 }

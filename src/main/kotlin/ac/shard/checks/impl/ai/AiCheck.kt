@@ -329,8 +329,10 @@ class AiCheck(
         return null
       }
 
+      val reason = cause.serverMessage ?: cause.message
       val logMessage =
-        "[AiCheck] API Error ${cause.code} for player ${shardPlayer.player.name}: ${cause.message}"
+        "[AiCheck] API Error ${cause.serverCode ?: cause.code} for player " +
+          "${shardPlayer.player.name}: $reason"
 
       val transientCategory = transientCategoryFor(cause.code)
       if (transientCategory != null) {

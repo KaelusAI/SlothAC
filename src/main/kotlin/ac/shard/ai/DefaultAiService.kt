@@ -60,7 +60,7 @@ class DefaultAiService(
     if (
       cause is AIServer.RequestException && cause.code == AIServer.ResponseCode.INVALID_SEQUENCE
     ) {
-      val sequence = parseSequence(cause.responseBody)
+      val sequence = sequenceFromDetails(cause.details) ?: parseSequence(cause.responseBody)
       if (sequence != null) {
         return CompletableFuture.failedFuture(AiServiceException(cause, sequence))
       }
@@ -68,6 +68,13 @@ class DefaultAiService(
 
     return CompletableFuture.failedFuture(cause)
   }
+
+  private fun sequenceFromDetails(details: Map<String, Any?>?): Int? =
+    when (val value = details?.get("expected_sequence")) {
+      is Number -> value.toInt()
+      is String -> value.toIntOrNull()
+      else -> null
+    }
 
   internal fun parseSequence(body: String?): Int? {
     if (body.isNullOrBlank()) return null
